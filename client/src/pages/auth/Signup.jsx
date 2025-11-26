@@ -4,11 +4,7 @@ import Loader from '../../components/Loader';
 import {
   Eye,
   EyeOff,
-  Check,
-  X,
   Github,
-  Mail,
-  Chrome
 } from 'lucide-react';
 import { FcGoogle } from "react-icons/fc";
 
