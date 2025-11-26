@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Loader from '../../components/Loader';
 
 const Auth = () => {
   const [showLoader, setShowLoader] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,6 +18,28 @@ const Auth = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
+        email,
+        password
+      });
+      console.log('Login successful:', response.data);
+      // Store token and redirect
+      // localStorage.setItem('token', response.data.token);
+      // navigate('/dashboard');
+    } catch (err) {
+      console.error('Login error:', err);
+      setError(err.response?.data?.message || 'Login failed');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (showLoader) {
     return <Loader text="Loading authentication..." />;
@@ -61,25 +88,36 @@ const Auth = () => {
         </div>
 
         {/* Email form */}
-        <div className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {error && <div className="text-red-500 text-sm text-center">{error}</div>}
           <div className="space-y-1.5">
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
+              required
               className="w-full rounded-full border border-white/15 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white focus:ring-1 focus:ring-white"
             />
           </div>
           <div className="space-y-1.5">
             <input
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
+              required
               className="w-full rounded-full border border-white/15 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white focus:ring-1 focus:ring-white"
             />
           </div>
-          <button className="mt-2 w-full rounded-full bg-white px-4 py-3 text-sm font-semibold text-black shadow-sm transition hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white">
-            Connect
+          <button
+            type="submit"
+            disabled={loading}
+            className="mt-2 w-full rounded-full bg-white px-4 py-3 text-sm font-semibold text-black shadow-sm transition hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-70"
+          >
+            {loading ? 'Connecting...' : 'Connect'}
           </button>
-        </div>
+        </form>
 
         {/* Footer text */}
         <div className="space-y-4 text-center text-xs text-white/50">

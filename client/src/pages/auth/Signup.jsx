@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Loader from '../../components/Loader';
 import {
   Eye,
@@ -86,11 +87,25 @@ const Signup = () => {
     if (!validate()) return;
 
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
-    // Handle successful signup here
-    console.log('Signup data:', formData);
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/signup', {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      });
+      console.log('Signup successful:', response.data);
+      // You might want to store the token and redirect here
+      // localStorage.setItem('token', response.data.token);
+      // navigate('/');
+    } catch (error) {
+      console.error('Signup error:', error);
+      setErrors(prev => ({
+        ...prev,
+        submit: error.response?.data?.message || 'Signup failed. Please try again.'
+      }));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const getStrengthColor = () => {
