@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Loader from '../../components/Loader';
 
-const Auth = ({ onOpenSignup }) => {
+const Auth = () => {
   const [showLoader, setShowLoader] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -91,7 +93,7 @@ const Auth = ({ onOpenSignup }) => {
             Don&apos;t have an account?{' '}
             <button
               type="button"
-              onClick={() => onOpenSignup && onOpenSignup()}
+              onClick={() => navigate('/signup')}
               className="font-medium text-white hover:underline"
             >
               Sign up
