@@ -1,19 +1,16 @@
 import './App.css'
-import { useState } from 'react'
-import Auth from './pages/auth/auth'
+import './App.css'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import Auth from './pages/auth/Auth'
 import Signup from './pages/auth/Signup.jsx'
 
 function App() {
-  const [page, setPage] = useState('auth')
-
   return (
-    <div>
-      {page === 'auth' ? (
-        <Auth onOpenSignup={() => setPage('signup')} />
-      ) : (
-        <Signup onBackToAuth={() => setPage('auth')} />
-      )}
-    </div>
+    <Routes>
+      <Route path="/" element={<Auth />} />
+      <Route path="/auth" element={<Navigate to="/" replace />} />
+      <Route path="/signup" element={<Signup />} />
+    </Routes>
   )
 }
 
