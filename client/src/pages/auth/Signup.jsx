@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Loader from '../../components/Loader';
 import {
   Eye,
   EyeOff,
-  Check,
-  X,
   Github,
-  Mail,
-  Chrome
 } from 'lucide-react';
 import { FcGoogle } from "react-icons/fc";
 
@@ -90,11 +87,22 @@ const Signup = () => {
     if (!validate()) return;
 
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
-    // Handle successful signup here
-    console.log('Signup data:', formData);
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/signup', {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      });
+      console.log('Signup successful:', response.data);
+    } catch (error) {
+      console.error('Signup error:', error);
+      setErrors(prev => ({
+        ...prev,
+        submit: error.response?.data?.message || 'Signup failed. Please try again.'
+      }));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const getStrengthColor = () => {
@@ -139,9 +147,9 @@ const Signup = () => {
           <button className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900 text-white shadow-sm ring-1 ring-white/10 transition hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-white">
             <FcGoogle className="h-5 w-5" />
           </button>
-          <button className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900 text-white shadow-sm ring-1 ring-white/10 transition hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-white">
+          {/* <button className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900 text-white shadow-sm ring-1 ring-white/10 transition hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-white">
             <Github className="h-5 w-5" />
-          </button>
+          </button> */}
         </div>
 
         {/* Divider */}
