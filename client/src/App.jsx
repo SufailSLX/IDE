@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import Auth from './pages/auth/Auth'
 import Signup from './pages/auth/Signup.jsx'
 import Home from './pages/home/Home.jsx'
+import Chat from './pages/home/Chat.jsx'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path="/auth" element={<Navigate to="/" replace />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/chat" element={<Chat />} />
     </Routes>
   )
 }
