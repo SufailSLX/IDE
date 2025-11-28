@@ -30,9 +30,7 @@ const Auth = () => {
         password
       });
       console.log('Login successful:', response.data);
-      // Store token and redirect
-      // localStorage.setItem('token', response.data.token);
-      // navigate('/dashboard');
+      
     } catch (err) {
       console.error('Login error:', err);
       setError(err.response?.data?.message || 'Login failed');
@@ -73,10 +71,6 @@ const Auth = () => {
           <button className="flex w-full items-center justify-center gap-2 rounded-full bg-neutral-900 px-4 py-3 text-sm font-medium text-white shadow-sm ring-1 ring-white/10 transition hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-white">
             <span className="text-lg">G</span>
             <span>Continue with Google</span>
-          </button>
-          <button className="flex w-full items-center justify-center gap-2 rounded-full bg-neutral-900 px-4 py-3 text-sm font-medium text-white shadow-sm ring-1 ring-white/10 transition hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-white">
-            <span className="text-lg">f</span>
-            <span>Continue with Facebook</span>
           </button>
         </div>
 

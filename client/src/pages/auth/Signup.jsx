@@ -94,9 +94,6 @@ const Signup = () => {
         password: formData.password
       });
       console.log('Signup successful:', response.data);
-      // You might want to store the token and redirect here
-      // localStorage.setItem('token', response.data.token);
-      // navigate('/');
     } catch (error) {
       console.error('Signup error:', error);
       setErrors(prev => ({
@@ -150,9 +147,9 @@ const Signup = () => {
           <button className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900 text-white shadow-sm ring-1 ring-white/10 transition hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-white">
             <FcGoogle className="h-5 w-5" />
           </button>
-          <button className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900 text-white shadow-sm ring-1 ring-white/10 transition hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-white">
+          {/* <button className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900 text-white shadow-sm ring-1 ring-white/10 transition hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-white">
             <Github className="h-5 w-5" />
-          </button>
+          </button> */}
         </div>
 
         {/* Divider */}
