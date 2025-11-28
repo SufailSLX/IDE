@@ -2,8 +2,8 @@ export default function RotatingLoader() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-950">
       <div className="loader"></div>
-      
-      <style jsx>{`
+
+      <style>{`
         .loader {
           width: 60px;
           aspect-ratio: 1;
