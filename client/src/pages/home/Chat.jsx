@@ -94,18 +94,7 @@ const Chat = () => {
                 <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
                   New Project
                 </button>
-                <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
-                  Image
-                </button>
-                <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
-                  Presentation
-                </button>
-                <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
-                  Riset
-                </button>
-                <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
-                  Image 2
-                </button>
+               
               </nav>
             )}
           </div>
