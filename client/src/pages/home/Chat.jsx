@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BringToFront, ChevronDown } from "lucide-react";
+import { BringToFront, ChevronDown, Zap, Mic } from "lucide-react";
 
 const Chat = () => {
   const [showOptions, setShowOptions] = useState(false);
@@ -9,6 +9,21 @@ const Chat = () => {
   const [featuresExpanded, setFeaturesExpanded] = useState(true);
   const [modelDropdownExpanded, setModelDropdownExpanded] = useState(false);
   const [selectedModel, setSelectedModel] = useState("ChatGPT v4.0");
+  const [showAIModels, setShowAIModels] = useState(false);
+
+  const aiModels = [
+    "ChatGPT v4.0",
+    "GPT-3.5 Turbo",
+    "Claude 3 Opus",
+    "Claude 3 Sonnet",
+    "Gemini Pro",
+    "Llama 2 70B",
+    "Mistral 7B"
+  ];
+
+  const handleZapClick = () => {
+    setShowAIModels(!showAIModels);
+  };
 
   useEffect(() => {
     const placeholders = [
@@ -111,7 +126,7 @@ const Chat = () => {
         <header className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-black/40 backdrop-blur">
           <div className="w-48" />
 
-          <div className="relative">
+          {/* <div className="relative">
             <div 
               className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs text-gray-200 cursor-pointer hover:bg-white/10 transition-colors"
               onClick={() => setModelDropdownExpanded(!modelDropdownExpanded)}
@@ -149,7 +164,7 @@ const Chat = () => {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
 
           <div className="flex items-center gap-3">
             <button className="px-3 py-1.5 rounded-full text-xs bg-white/5 hover:bg-white/10 text-gray-200 border border-white/10">
@@ -207,11 +222,36 @@ const Chat = () => {
                       </>
                     )}
                   </div>
+                  <div className="relative">
+                    <button 
+                      onClick={handleZapClick} 
+                      className="flex items-center hover:text-white transition-colors"
+                    >
+                      <Zap size={14} />
+                    </button>
+                    {showAIModels && (
+                      <div className="absolute bottom-full left-0 mb-2 w-48 bg-black/90 border border-white/10 rounded-lg shadow-lg py-2">
+                        {aiModels.map((model, index) => (
+                          <button
+                            key={index}
+                            onClick={() => {
+                              setSelectedModel(model);
+                              setShowAIModels(false);
+                            }}
+                            className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+                          >
+                            {model}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button className="h-8 w-8 rounded-full border border-white/20 flex items-center justify-center text-xs text-gray-200 hover:bg-white/10">
-                    🎙
+                    <Mic size={14} />
                   </button>
                   <button className="h-9 w-9 rounded-full bg-gradient-to-tr from-fuchsia-500 to-purple-500 flex items-center justify-center text-white text-lg shadow-[0_0_25px_rgba(236,72,153,0.7)] hover:brightness-110">
                     ↑
