@@ -1,10 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { BringToFront } from "lucide-react";
+import { BringToFront, ChevronDown, Zap, Mic } from "lucide-react";
 
 const Chat = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [placeholderText, setPlaceholderText] = useState("Ask Anything...");
   const [inputValue, setInputValue] = useState("");
+  const [workspacesExpanded, setWorkspacesExpanded] = useState(true);
+  const [featuresExpanded, setFeaturesExpanded] = useState(true);
+  const [modelDropdownExpanded, setModelDropdownExpanded] = useState(false);
+  const [selectedModel, setSelectedModel] = useState("ChatGPT v4.0");
+  const [showAIModels, setShowAIModels] = useState(false);
+
+  const aiModels = [
+    "ChatGPT v4.0",
+    "GPT-3.5 Turbo",
+    "Claude 3 Opus",
+    "Claude 3 Sonnet",
+    "Gemini Pro",
+    "Llama 2 70B",
+    "Mistral 7B"
+  ];
+
+  const handleZapClick = () => {
+    setShowAIModels(!showAIModels);
+  };
 
   useEffect(() => {
     const placeholders = [
@@ -45,41 +64,51 @@ const Chat = () => {
 
           {/* Primary navigation */}
           <div className="mt-6">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-gray-500 mb-2">Features</p>
-            <nav className="space-y-1 text-sm">
-              <button className="w-full flex items-center justify-between rounded-lg px-2.5 py-2 bg-white/5 text-white">
-                <span>Chat</span>
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              </button>
-              <button className="w-full text-left rounded-lg px-2.5 py-2 text-gray-400 hover:bg-white/5 hover:text-gray-100">
-                Archived
-              </button>
-              <button className="w-full text-left rounded-lg px-2.5 py-2 text-gray-400 hover:bg-white/5 hover:text-gray-100">
-                Library
-              </button>
-            </nav>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-gray-500 mb-2 cursor-pointer flex items-center justify-between" onClick={() => setFeaturesExpanded(!featuresExpanded)}>
+              Features
+              <ChevronDown className={`transform transition-transform ${featuresExpanded ? 'rotate-180' : ''}`} size={12} />
+            </p>
+            {featuresExpanded && (
+              <nav className="space-y-1 text-sm">
+                <button className="w-full flex items-center justify-between rounded-lg px-2.5 py-2 bg-white/5 text-white">
+                  <span>Chat</span>
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                </button>
+                <button className="w-full text-left rounded-lg px-2.5 py-2 text-gray-400 hover:bg-white/5 hover:text-gray-100">
+                  Archived
+                </button>
+                <button className="w-full text-left rounded-lg px-2.5 py-2 text-gray-400 hover:bg-white/5 hover:text-gray-100">
+                  Library
+                </button>
+              </nav>
+            )}
           </div>
 
           {/* Workspaces */}
           <div className="mt-6">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-gray-500 mb-2">Workspaces</p>
-            <nav className="space-y-1 text-sm text-gray-300">
-              <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
-                New Project
-              </button>
-              <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
-                Image
-              </button>
-              <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
-                Presentation
-              </button>
-              <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
-                Riset
-              </button>
-              <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
-                Image 2
-              </button>
-            </nav>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-gray-500 mb-2 cursor-pointer flex items-center justify-between" onClick={() => setWorkspacesExpanded(!workspacesExpanded)}>
+              Workspaces
+              <ChevronDown className={`transform transition-transform ${workspacesExpanded ? 'rotate-180' : ''}`} size={12} />
+            </p>
+            {workspacesExpanded && (
+              <nav className="space-y-1 text-sm text-gray-300">
+                <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
+                  New Project
+                </button>
+                <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
+                  Image
+                </button>
+                <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
+                  Presentation
+                </button>
+                <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
+                  Riset
+                </button>
+                <button className="w-full text-left rounded-lg px-2.5 py-2 hover:bg-white/5">
+                  Image 2
+                </button>
+              </nav>
+            )}
           </div>
         </div>
 
@@ -98,10 +127,45 @@ const Chat = () => {
         <header className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-black/40 backdrop-blur">
           <div className="w-48" />
 
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs text-gray-200">
-            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 mr-1" />
-            <span className="font-medium">ChatGPT v4.0</span>
-          </div>
+          {/* <div className="relative">
+            <div 
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs text-gray-200 cursor-pointer hover:bg-white/10 transition-colors"
+              onClick={() => setModelDropdownExpanded(!modelDropdownExpanded)}
+            >
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 mr-1" />
+              <span className="font-medium">{selectedModel}</span>
+              <ChevronDown className={`transform transition-transform ${modelDropdownExpanded ? 'rotate-180' : ''} ml-1`} size={12} />
+            </div>
+
+            {modelDropdownExpanded && (
+              <div className="absolute top-full mt-2 left-0 right-0 bg-black/90 border border-white/10 rounded-lg shadow-lg z-50">
+                <div className="py-1">
+                  {[
+                    { name: "ChatGPT v4.0", status: "online" },
+                    { name: "GPT-4 Turbo", status: "online" },
+                    { name: "GPT-3.5 Turbo", status: "online" },
+                    { name: "Claude 3.5 Sonnet", status: "online" },
+                    { name: "Gemini Pro", status: "maintenance" },
+                    { name: "Llama 3.1", status: "online" }
+                  ].map((model) => (
+                    <button
+                      key={model.name}
+                      className="w-full flex items-center justify-between px-3 py-2 text-xs text-gray-200 hover:bg-white/10 transition-colors"
+                      onClick={() => {
+                        setSelectedModel(model.name);
+                        setModelDropdownExpanded(false);
+                      }}
+                    >
+                      <span>{model.name}</span>
+                      <span className={`inline-flex h-1.5 w-1.5 rounded-full ${
+                        model.status === 'online' ? 'bg-emerald-400' : 'bg-yellow-400'
+                      }`} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div> */}
 
           <div className="flex items-center gap-3">
             <button className="px-3 py-1.5 rounded-full text-xs bg-white/5 hover:bg-white/10 text-gray-200 border border-white/10">
@@ -159,11 +223,36 @@ const Chat = () => {
                       </>
                     )}
                   </div>
+                  <div className="relative">
+                    <button 
+                      onClick={handleZapClick} 
+                      className="flex items-center hover:text-white transition-colors"
+                    >
+                      <Zap size={14} />
+                    </button>
+                    {showAIModels && (
+                      <div className="absolute bottom-full left-0 mb-2 w-48 bg-black/90 border border-white/10 rounded-lg shadow-lg py-2">
+                        {aiModels.map((model, index) => (
+                          <button
+                            key={index}
+                            onClick={() => {
+                              setSelectedModel(model);
+                              setShowAIModels(false);
+                            }}
+                            className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+                          >
+                            {model}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button className="h-8 w-8 rounded-full border border-white/20 flex items-center justify-center text-xs text-gray-200 hover:bg-white/10">
-                    🎙
+                    <Mic size={14} />
                   </button>
                   <button className="h-9 w-9 rounded-full bg-gradient-to-tr from-fuchsia-500 to-purple-500 flex items-center justify-center text-white text-lg shadow-[0_0_25px_rgba(236,72,153,0.7)] hover:brightness-110">
                     ↑
