@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { BringToFront, ChevronDown, Zap, Mic } from "lucide-react";
+import "./Chat.css";
 
 const Chat = () => {
+  const navigate = useNavigate();
   const [showOptions, setShowOptions] = useState(false);
   const [placeholderText, setPlaceholderText] = useState("Ask Anything...");
   const [inputValue, setInputValue] = useState("");
@@ -101,11 +104,12 @@ const Chat = () => {
         </div>
 
         {/* Upgrade card */}
-        <div className="mt-4 rounded-2xl bg-white/5 border border-white/10 p-4">
-
-          <button className="w-full rounded-xl bg-white/10 py-2 text-xs font-medium hover:bg-white/20 transition">
-            Upgrade
-          </button>
+        <div className="mt-4">
+          <div className="holographic-card">
+            <button onClick={() => navigate('/plans')}>
+              Upgrade
+            </button>
+          </div>
         </div>
       </aside>
 
