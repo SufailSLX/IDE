@@ -144,7 +144,7 @@ const Chat = () => {
             <div className="w-48" />
           </div>
 
-          {/* <div className="relative">
+          <div className="relative">
             <div 
               className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs text-gray-200 cursor-pointer hover:bg-white/10 transition-colors"
               onClick={() => setModelDropdownExpanded(!modelDropdownExpanded)}
@@ -182,7 +182,7 @@ const Chat = () => {
                 </div>
               </div>
             )}
-          </div> */}
+          </div>
 
         </header>
 
