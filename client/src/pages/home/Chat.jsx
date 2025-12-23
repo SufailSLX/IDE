@@ -144,9 +144,26 @@ const Chat = () => {
             <div className="w-48" />
           </div>
 
-          <div className="relative">
+        </header>
+
+        {/* Hero + input area */}
+        <section className="flex-1 flex flex-col items-center justify-center px-6 pb-6 pt-4">
+          {/* Orb */}
+          <div className="relative mb-6">
+            <div className="h-24 w-24 rounded-full bg-gradient-to-tr from-purple-500 via-fuchsia-500 to-indigo-400 shadow-[0_0_80px_rgba(168,85,247,0.8)]" />
+          </div>
+
+          <h1 className="text-2xl md:text-3xl font-semibold tracking-wide mb-1">
+            Ready to Create Something New?
+          </h1>
+          <p className="text-sm text-gray-400 mb-8">
+            Ask anything and we will help you build, design, or present it.
+          </p>
+
+          {/* Model Selector */}
+          <div className="relative mb-6">
             <div 
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs text-gray-200 cursor-pointer hover:bg-white/10 transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs text-gray-200 cursor-pointer hover:bg-white/10 transition-colors mx-auto w-fit"
               onClick={() => setModelDropdownExpanded(!modelDropdownExpanded)}
             >
               <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 mr-1" />
@@ -155,7 +172,7 @@ const Chat = () => {
             </div>
 
             {modelDropdownExpanded && (
-              <div className="absolute top-full mt-2 left-0 right-0 bg-black/90 border border-white/10 rounded-lg shadow-lg z-50">
+              <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-black/90 border border-white/10 rounded-lg shadow-lg z-50 min-w-48">
                 <div className="py-1">
                   {[
                     { name: "ChatGPT v4.0", status: "online" },
@@ -183,22 +200,6 @@ const Chat = () => {
               </div>
             )}
           </div>
-
-        </header>
-
-        {/* Hero + input area */}
-        <section className="flex-1 flex flex-col items-center justify-center px-6 pb-6 pt-4">
-          {/* Orb */}
-          <div className="relative mb-6">
-            <div className="h-24 w-24 rounded-full bg-gradient-to-tr from-purple-500 via-fuchsia-500 to-indigo-400 shadow-[0_0_80px_rgba(168,85,247,0.8)]" />
-          </div>
-
-          <h1 className="text-2xl md:text-3xl font-semibold tracking-wide mb-1">
-            Ready to Create Something New?
-          </h1>
-          <p className="text-sm text-gray-400 mb-8">
-            Ask anything and we will help you build, design, or present it.
-          </p>
 
           {/* Chat input card */}
           <div className="w-full max-w-3xl rounded-3xl bg-black/40 border border-white/10 shadow-[0_0_60px_rgba(15,23,42,0.8)] p-4">
