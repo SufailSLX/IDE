@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { BringToFront, ChevronDown, Zap, Mic } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { BringToFront, ChevronDown, Zap, Mic, X } from "lucide-react";
+import styled from "styled-components";
+import "./Chat.css";
 
 const Chat = () => {
+  const navigate = useNavigate();
   const [showOptions, setShowOptions] = useState(false);
   const [placeholderText, setPlaceholderText] = useState("Ask Anything...");
   const [inputValue, setInputValue] = useState("");
@@ -10,6 +14,7 @@ const Chat = () => {
   const [modelDropdownExpanded, setModelDropdownExpanded] = useState(false);
   const [selectedModel, setSelectedModel] = useState("ChatGPT v4.0");
   const [showAIModels, setShowAIModels] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const aiModels = [
     "ChatGPT v4.0",
@@ -42,21 +47,103 @@ const Chat = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const Loader = () => {
+    return (
+      <StyledWrapper>
+        <div className="spinner">
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
+      </StyledWrapper>
+    );
+  }
+
+  const StyledWrapper = styled.div`
+    .spinner {
+     width: 44px;
+     height: 44px;
+     animation: spinner-y0fdc1 2s infinite ease;
+     transform-style: preserve-3d;
+    }
+
+    .spinner > div {
+     background-color: rgba(0,77,255,0.2);
+     height: 100%;
+     position: absolute;
+     width: 100%;
+     border: 2px solid #004dff;
+    }
+
+    .spinner div:nth-of-type(1) {
+     transform: translateZ(-22px) rotateY(180deg);
+    }
+
+    .spinner div:nth-of-type(2) {
+     transform: rotateY(-270deg) translateX(50%);
+     transform-origin: top right;
+    }
+
+    .spinner div:nth-of-type(3) {
+     transform: rotateY(270deg) translateX(-50%);
+     transform-origin: center left;
+    }
+
+    .spinner div:nth-of-type(4) {
+     transform: rotateX(90deg) translateY(-50%);
+     transform-origin: top center;
+    }
+
+    .spinner div:nth-of-type(5) {
+     transform: rotateX(-90deg) translateY(50%);
+     transform-origin: bottom center;
+    }
+
+    .spinner div:nth-of-type(6) {
+     transform: translateZ(22px);
+    }
+
+    @keyframes spinner-y0fdc1 {
+     0% {
+      transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
+     }
+
+     50% {
+      transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
+     }
+
+     100% {
+      transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+     }
+    }`;
+
   return (
     <div className="h-screen w-full bg-gradient-to-br from-[#05010A] via-[#050016] to-[#050018] text-gray-100 flex">
       {/* Left sidebar */}
-      <aside className="w-64 bg-black/80 border-r border-white/5 flex flex-col justify-between p-4">
+      {sidebarOpen && (
+        <aside className="w-64 bg-black/80 border-r border-white/5 flex flex-col justify-between p-4">
         {/* Logo / brand */}
         <div>
-          <div className="flex items-center gap-2 mb-6">
-            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-purple-500 to-fuchsia-400 flex items-center justify-center text-sm font-semibold">
-              D
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-purple-500 to-fuchsia-400 flex items-center justify-center text-sm font-semibold">
+                D
+              </div>
+              <span className="text-lg font-semibold tracking-tight">Dev Ai</span>
             </div>
-            <span className="text-lg font-semibold tracking-tight">Dev Ai</span>
+            <button 
+              onClick={() => setSidebarOpen(false)}
+              className="p-1 rounded-lg hover:bg-white/10 transition-colors"
+            >
+              <X size={16} />
+            </button>
           </div>
 
-          <button className="w-full flex items-center justify-center gap-2 rounded-xl bg-white text-black py-2.5 text-sm font-medium hover:bg-gray-100 transition">
-            <span className="inline-block h-5 w-5 rounded-full bg-black text-white text-xs flex items-center justify-center">
+          <button className="w-full flex items-center justify-center gap-2 rounded-xl bg-white text-black py-2.5 text-sm font-medium transition-all duration-300 hover:bg-gray-50 hover:shadow-lg hover:shadow-white/25 hover:scale-[1.02] hover:border hover:border-white/20">
+            <span className="inline-block h-5 w-5 rounded-full bg-black text-white text-xs flex items-center justify-center transition-transform duration-300 hover:rotate-90">
               +
             </span>
             New Chat
@@ -102,23 +189,56 @@ const Chat = () => {
         </div>
 
         {/* Upgrade card */}
-        <div className="mt-4 rounded-2xl bg-white/5 border border-white/10 p-4">
-
-          <button className="w-full rounded-xl bg-white/10 py-2 text-xs font-medium hover:bg-white/20 transition">
-            Upgrade
-          </button>
+        <div className="mt-4">
+          <div className="holographic-card">
+            <button onClick={() => navigate('/plans')}>
+              Upgrade
+            </button>
+          </div>
         </div>
       </aside>
+      )}
 
       {/* Main panel */}
       <main className="flex-1 flex flex-col">
         {/* Top bar */}
         <header className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-black/40 backdrop-blur">
-          <div className="w-48" />
+          <div className="flex items-center gap-3">
+            {!sidebarOpen && (
+              <button 
+                onClick={() => setSidebarOpen(true)}
+                className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="3" y1="12" x2="21" y2="12"></line>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+              </button>
+            )}
+            <div className="w-48" />
+          </div>
 
-          {/* <div className="relative">
+        </header>
+
+        {/* Hero + input area */}
+        <section className="flex-1 flex flex-col items-center justify-center px-6 pb-6 pt-4">
+          {/* Orb */}
+          <div className="relative mb-6">
+            <Loader />
+          </div>
+
+          <h1 className="text-2xl md:text-3xl font-semibold tracking-wide mb-1">
+            Ready to Create Something New?
+          </h1>
+          <p className="text-sm text-gray-400 mb-8">
+            Ask anything and we will help you build, design, or present it.
+          </p>
+
+          {/* Model Selector */}
+          <div className="relative mb-6">
             <div 
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs text-gray-200 cursor-pointer hover:bg-white/10 transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs text-gray-200 cursor-pointer hover:bg-white/10 transition-colors mx-auto w-fit"
               onClick={() => setModelDropdownExpanded(!modelDropdownExpanded)}
             >
               <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 mr-1" />
@@ -127,7 +247,7 @@ const Chat = () => {
             </div>
 
             {modelDropdownExpanded && (
-              <div className="absolute top-full mt-2 left-0 right-0 bg-black/90 border border-white/10 rounded-lg shadow-lg z-50">
+              <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-black/90 border border-white/10 rounded-lg shadow-lg z-50 min-w-48">
                 <div className="py-1">
                   {[
                     { name: "ChatGPT v4.0", status: "online" },
@@ -154,31 +274,7 @@ const Chat = () => {
                 </div>
               </div>
             )}
-          </div> */}
-
-          <div className="flex items-center gap-3">
-            <button className="px-3 py-1.5 rounded-full text-xs bg-white/5 hover:bg-white/10 text-gray-200 border border-white/10">
-              Configuration
-            </button>
-            <button className="px-3 py-1.5 rounded-full text-xs bg-white/5 hover:bg-white/10 text-gray-200 border border-white/10">
-              Export
-            </button>
           </div>
-        </header>
-
-        {/* Hero + input area */}
-        <section className="flex-1 flex flex-col items-center justify-center px-6 pb-6 pt-4">
-          {/* Orb */}
-          <div className="relative mb-6">
-            <div className="h-24 w-24 rounded-full bg-gradient-to-tr from-purple-500 via-fuchsia-500 to-indigo-400 shadow-[0_0_80px_rgba(168,85,247,0.8)]" />
-          </div>
-
-          <h1 className="text-2xl md:text-3xl font-semibold tracking-wide mb-1">
-            Ready to Create Something New?
-          </h1>
-          <p className="text-sm text-gray-400 mb-8">
-            Ask anything and we will help you build, design, or present it.
-          </p>
 
           {/* Chat input card */}
           <div className="w-full max-w-3xl rounded-3xl bg-black/40 border border-white/10 shadow-[0_0_60px_rgba(15,23,42,0.8)] p-4">
