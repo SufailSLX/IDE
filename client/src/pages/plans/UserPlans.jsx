@@ -1,3 +1,6 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 const CheckIcon = () => (
   <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500/10 mr-2">
     <svg
@@ -16,6 +19,8 @@ const CheckIcon = () => (
 );
 
 const UserPlans = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen w-full bg-black text-white flex items-center justify-center px-4 py-16">
       <div className="relative w-full max-w-6xl">
@@ -27,6 +32,12 @@ const UserPlans = () => {
 
         {/* Header */}
         <div className="text-center mb-12">
+          <button
+            onClick={() => navigate('/chat')}
+            className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors"
+          >
+            ← Back to Chat
+          </button>
           <p className="text-xs font-semibold tracking-[0.25em] text-emerald-300/80 uppercase mb-3">
             pricing
           </p>
