@@ -215,7 +215,46 @@ const Chat = () => {
                 </svg>
               </button>
             )}
-            <div className="w-48" />
+            {/* Model Selector */}
+            <div className="relative">
+              <div 
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs text-gray-200 cursor-pointer hover:bg-white/10 transition-colors"
+                onClick={() => setModelDropdownExpanded(!modelDropdownExpanded)}
+              >
+                <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 mr-1" />
+                <span className="font-medium">{selectedModel}</span>
+                <ChevronDown className={`transform transition-transform ${modelDropdownExpanded ? 'rotate-180' : ''} ml-1`} size={12} />
+              </div>
+
+              {modelDropdownExpanded && (
+                <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-black/90 border border-white/10 rounded-lg shadow-lg z-50 min-w-48">
+                  <div className="py-1">
+                    {[
+                      { name: "ChatGPT v4.0", status: "online" },
+                      { name: "GPT-4 Turbo", status: "online" },
+                      { name: "GPT-3.5 Turbo", status: "online" },
+                      { name: "Claude 3.5 Sonnet", status: "online" },
+                      { name: "Gemini Pro", status: "maintenance" },
+                      { name: "Llama 3.1", status: "online" }
+                    ].map((model) => (
+                      <button
+                        key={model.name}
+                        className="w-full flex items-center justify-between px-3 py-2 text-xs text-gray-200 hover:bg-white/10 transition-colors"
+                        onClick={() => {
+                          setSelectedModel(model.name);
+                          setModelDropdownExpanded(false);
+                        }}
+                      >
+                        <span>{model.name}</span>
+                        <span className={`inline-flex h-1.5 w-1.5 rounded-full ${
+                          model.status === 'online' ? 'bg-emerald-400' : 'bg-yellow-400'
+                        }`} />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
         </header>
@@ -233,47 +272,6 @@ const Chat = () => {
           <p className="text-sm text-gray-400 mb-8">
             Ask anything and we will help you build, design, or present it.
           </p>
-
-          {/* Model Selector */}
-          <div className="relative mb-6">
-            <div 
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs text-gray-200 cursor-pointer hover:bg-white/10 transition-colors mx-auto w-fit"
-              onClick={() => setModelDropdownExpanded(!modelDropdownExpanded)}
-            >
-              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 mr-1" />
-              <span className="font-medium">{selectedModel}</span>
-              <ChevronDown className={`transform transition-transform ${modelDropdownExpanded ? 'rotate-180' : ''} ml-1`} size={12} />
-            </div>
-
-            {modelDropdownExpanded && (
-              <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-black/90 border border-white/10 rounded-lg shadow-lg z-50 min-w-48">
-                <div className="py-1">
-                  {[
-                    { name: "ChatGPT v4.0", status: "online" },
-                    { name: "GPT-4 Turbo", status: "online" },
-                    { name: "GPT-3.5 Turbo", status: "online" },
-                    { name: "Claude 3.5 Sonnet", status: "online" },
-                    { name: "Gemini Pro", status: "maintenance" },
-                    { name: "Llama 3.1", status: "online" }
-                  ].map((model) => (
-                    <button
-                      key={model.name}
-                      className="w-full flex items-center justify-between px-3 py-2 text-xs text-gray-200 hover:bg-white/10 transition-colors"
-                      onClick={() => {
-                        setSelectedModel(model.name);
-                        setModelDropdownExpanded(false);
-                      }}
-                    >
-                      <span>{model.name}</span>
-                      <span className={`inline-flex h-1.5 w-1.5 rounded-full ${
-                        model.status === 'online' ? 'bg-emerald-400' : 'bg-yellow-400'
-                      }`} />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
 
           {/* Chat input card */}
           <div className="w-full max-w-3xl rounded-3xl bg-black/40 border border-white/10 shadow-[0_0_60px_rgba(15,23,42,0.8)] p-4">
