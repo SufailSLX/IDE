@@ -1,6 +1,8 @@
 import "./home.css";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center bg-[#000000]">
       <svg xmlns="http://www.w3.org/2000/svg" height="220" width="220">
@@ -121,6 +123,21 @@ const Home = () => {
       <p className="text-gray-300 text-lg mt-2">
         Your AI universe begins here.
       </p>
+      <div className="mt-10 relative group">
+        <div
+          className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-amber-300 via-orange-400 to-pink-500 opacity-60 blur-2xl transition-all duration-500 group-hover:opacity-90 group-hover:blur-[72px]"
+          aria-hidden
+        />
+        <button
+          onClick={() => navigate('/chat')}
+          className="relative inline-flex items-center gap-3 overflow-hidden rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-black shadow-[0_15px_40px_rgba(255,170,80,0.35)] transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-amber-200/70 focus:ring-offset-2 focus:ring-offset-black"
+        >
+          <span className="absolute inset-0 bg-gradient-to-r from-amber-300 via-orange-400 to-pink-500" aria-hidden />
+          <span className="absolute inset-0 translate-x-[-120%] bg-white/40 opacity-0 transition-all duration-500 group-hover:translate-x-[120%] group-hover:opacity-100" aria-hidden />
+          <span className="relative z-10">Get Started</span>
+          <span className="relative z-10 text-lg">→</span>
+        </button>
+      </div>
     </div>
   );
 };
