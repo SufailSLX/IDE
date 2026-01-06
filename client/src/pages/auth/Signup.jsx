@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Loader from '../../components/Loader';
+import Loader from '../../components/animations/Loader'
 import {
   Eye,
   EyeOff,
@@ -88,7 +88,7 @@ const Signup = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/signup', {
+      const response = await axios.post('http://localhost:5001/api/auth/signup', {
         name: formData.name,
         email: formData.email,
         password: formData.password

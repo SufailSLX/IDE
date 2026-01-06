@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Loader from '../../components/Loader';
+import Loader from '../../components/animations/Loader';
 
 const Auth = () => {
   const [showLoader, setShowLoader] = useState(true);
@@ -25,7 +25,7 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post('http://localhost:5001/api/auth/login', {
         email,
         password
       });
