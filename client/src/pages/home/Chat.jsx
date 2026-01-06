@@ -95,7 +95,6 @@ const Chat = () => {
     ];
     let index = 0;
 
-    
     const interval = setInterval(() => {
       index = (index + 1) % placeholders.length;
       setPlaceholderText(placeholders[index]);
