@@ -1,6 +1,8 @@
 import "./home.css";
-
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center bg-[#000000]">
       <svg xmlns="http://www.w3.org/2000/svg" height="220" width="220">
@@ -121,6 +123,75 @@ const Home = () => {
       <p className="text-gray-300 text-lg mt-2">
         Your AI universe begins here.
       </p>
+      <div className="mt-10 relative group">
+        <div
+          className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-amber-300 via-orange-400 to-pink-500 opacity-60 blur-2xl transition-all duration-500 group-hover:opacity-90 group-hover:blur-[72px]"
+          aria-hidden
+        />
+        <button
+          id="magneticButton"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate('/chat');
+          }}
+          className="magnetic-btn relative inline-flex items-center justify-center gap-3 overflow-visible px-10 py-3"
+        >
+          <div className="particles-field" id="particleField"></div>
+          <span className="ff">Get Started</span>
+          <span className="relative z-10 text-lg">→</span>
+        </button>
+      </div>
+      
+      {/* Magnetic button effect script */}
+      {useEffect(() => {
+        const button = document.getElementById('magneticButton');
+        const particleField = document.getElementById('particleField');
+        
+        // Create particles
+        for (let i = 0; i < 30; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          particle.style.setProperty('--x', `${Math.random() * 100 - 50}px`);
+          particle.style.setProperty('--y', `${Math.random() * 100 - 50}px`);
+          particle.style.animation = `particleFloat ${1 + Math.random() * 2}s infinite`;
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.top = `${Math.random() * 100}%`;
+          particle.style.animationDelay = `${Math.random() * 2}s`;
+          particleField.appendChild(particle);
+        }
+
+        // Magnetic effect
+        const handleMouseMove = (e) => {
+          const rect = button.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          // Calculate distance from center
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const distanceX = x - centerX;
+          const distanceY = y - centerY;
+          
+          // Apply transform based on distance from center
+          const strength = 15;
+          const moveX = (distanceX / centerX) * strength;
+          const moveY = (distanceY / centerY) * strength;
+          
+          button.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        };
+
+        const handleMouseLeave = () => {
+          button.style.transform = 'translate(0, 0)';
+        };
+
+        button.addEventListener('mousemove', handleMouseMove);
+        button.addEventListener('mouseleave', handleMouseLeave);
+
+        return () => {
+          button.removeEventListener('mousemove', handleMouseMove);
+          button.removeEventListener('mouseleave', handleMouseLeave);
+        };
+      }, [])}
     </div>
   );
 };
