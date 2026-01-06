@@ -1,6 +1,6 @@
 import "./home.css";
 import { useNavigate } from "react-router-dom";
-
+import { useEffect } from "react";
 const Home = () => {
   const navigate = useNavigate();
   return (
@@ -129,15 +129,69 @@ const Home = () => {
           aria-hidden
         />
         <button
-          onClick={() => navigate('/chat')}
-          className="relative inline-flex items-center gap-3 overflow-hidden rounded-full px-10 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-black shadow-[0_15px_40px_rgba(255,170,80,0.35)] transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-amber-200/70 focus:ring-offset-2 focus:ring-offset-black"
+          id="magneticButton"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate('/chat');
+          }}
+          className="magnetic-btn relative inline-flex items-center justify-center gap-3 overflow-visible px-10 py-3"
         >
-          <span className="absolute inset-0 bg-gradient-to-r from-amber-300 via-orange-400 to-pink-500" aria-hidden />
-          <span className="absolute inset-0 translate-x-[-120%] bg-white/40 opacity-0 transition-all duration-500 group-hover:translate-x-[120%] group-hover:opacity-100" aria-hidden />
-          <span className="relative z-10">Get Started</span>
+          <div className="particles-field" id="particleField"></div>
+          <span className="ff">Get Started</span>
           <span className="relative z-10 text-lg">→</span>
         </button>
       </div>
+      
+      {/* Magnetic button effect script */}
+      {useEffect(() => {
+        const button = document.getElementById('magneticButton');
+        const particleField = document.getElementById('particleField');
+        
+        // Create particles
+        for (let i = 0; i < 30; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          particle.style.setProperty('--x', `${Math.random() * 100 - 50}px`);
+          particle.style.setProperty('--y', `${Math.random() * 100 - 50}px`);
+          particle.style.animation = `particleFloat ${1 + Math.random() * 2}s infinite`;
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.top = `${Math.random() * 100}%`;
+          particle.style.animationDelay = `${Math.random() * 2}s`;
+          particleField.appendChild(particle);
+        }
+
+        // Magnetic effect
+        const handleMouseMove = (e) => {
+          const rect = button.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          // Calculate distance from center
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const distanceX = x - centerX;
+          const distanceY = y - centerY;
+          
+          // Apply transform based on distance from center
+          const strength = 15;
+          const moveX = (distanceX / centerX) * strength;
+          const moveY = (distanceY / centerY) * strength;
+          
+          button.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        };
+
+        const handleMouseLeave = () => {
+          button.style.transform = 'translate(0, 0)';
+        };
+
+        button.addEventListener('mousemove', handleMouseMove);
+        button.addEventListener('mouseleave', handleMouseLeave);
+
+        return () => {
+          button.removeEventListener('mousemove', handleMouseMove);
+          button.removeEventListener('mouseleave', handleMouseLeave);
+        };
+      }, [])}
     </div>
   );
 };

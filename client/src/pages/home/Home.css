@@ -49,3 +49,57 @@
   translate: 0px 46px;
   animation-delay: 0.5s;
 }
+
+/* Magnetic Button Styles */
+.magnetic-btn {
+  position: relative;
+  padding: 1.5rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #2d2d2d;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  overflow: visible;
+  transition: all 0.4s ease;
+  min-width: 200px;
+  z-index: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  box-shadow: 0 15px 40px rgba(255, 170, 80, 0.35);
+}
+
+.magnetic-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 50px rgba(255, 170, 80, 0.5);
+}
+
+.particles-field {
+  position: absolute;
+  inset: -100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 50px;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.magnetic-btn:hover .particles-field {
+  opacity: 1;
+}
+
+@keyframes particleFloat {
+  0% { transform: translate(var(--x), var(--y)) scale(0); }
+  50% { transform: translate(calc(var(--x) * -1), calc(var(--y) * -1)) scale(1); }
+  100% { transform: translate(var(--x), var(--y)) scale(0); }
+}
